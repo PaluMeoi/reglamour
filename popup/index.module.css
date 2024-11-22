@@ -1,0 +1,31 @@
+.buttonRoot {
+    overflow: hidden;
+    text-align: left;
+    position: relative;
+}
+
+.scrollText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    width: 100%;*/
+/*    transition: all 0.3s ease;*/
+/*    position: relative;*/
+}
+
+/*.scrollText:hover {*/
+/*    animation: scroll 5s linear backwards;*/
+/*    animation-delay: .5s;*/
+/*    overflow: unset;*/
+/*    transition: overflow .5s ease;*/
+/*    transition-delay: 0.5s;*/
+/*}*/
+
+/*@keyframes scroll {*/
+/*    0% {*/
+/*        transform: translateX(0);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(-100%);*/
+/*    }*/
+/*}*/

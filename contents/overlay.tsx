@@ -1,30 +1,30 @@
-import { Anchor, Button, Input, Stack, Text } from "@mantine/core"
-import mantineCssText from "data-text:@mantine/core/styles.css"
-import mantineOverrideCssText from "data-text:~styles/mantine-override.css"
-import type { PlasmoCSConfig, PlasmoGetStyle } from "plasmo"
-import { useState } from "react"
+import { Anchor, Button, Input, Stack, Text } from "@mantine/core";
+import mantineCssText from "data-text:@mantine/core/styles.css";
+import mantineOverrideCssText from "data-text:~styles/mantine-override.css";
+import type { PlasmoCSConfig, PlasmoGetStyle } from "plasmo";
+import { useState } from "react";
 
-import { ThemeProvider } from "~theme"
+import { ThemeProvider } from "~theme";
 
-import "@mantine/core/styles.css"
+import "@mantine/core/styles.css";
 //see https://github.com/PlasmoHQ/plasmo/issues/776#issuecomment-1811072653
-import "~styles/mantine-override.css"
+import "~styles/mantine-override.css";
 
-import { setMantineColorScheme } from "~utils"
+import { setMantineColorScheme } from "~utils";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://www.plasmo.com/*"]
-}
+  matches: ["https://www.plasmo.com/*"],
+};
 
 export const getStyle: PlasmoGetStyle = () => {
-  const style = document.createElement("style")
-  style.textContent = mantineCssText + mantineOverrideCssText
-  return style
-}
+  const style = document.createElement("style");
+  style.textContent = mantineCssText + mantineOverrideCssText;
+  return style;
+};
 
 function PlasmoOverlay() {
-  const [data, setData] = useState("")
-  setMantineColorScheme("light")
+  const [data, setData] = useState("");
+  setMantineColorScheme("light");
   return (
     <ThemeProvider>
       <Stack miw={240} bg="white" p="lg">
@@ -41,7 +41,7 @@ function PlasmoOverlay() {
         </Button>
       </Stack>
     </ThemeProvider>
-  )
+  );
 }
 
-export default PlasmoOverlay
+export default PlasmoOverlay;

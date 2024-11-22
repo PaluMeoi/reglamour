@@ -6,15 +6,22 @@
   "author": "Palu (reglamour@meoi.ninja)",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build",
-    "package": "plasmo package"
+    "build": "plasmo build && plasmo build --target=firefox-mv2",
+    "package": "plasmo package --target=firefox-mv2",
+    "firefox-dev": "plasmo dev --target=firefox-mv2"
   },
   "dependencies": {
     "@mantine/core": "7.4.2",
+    "@mantine/form": "^7.14.1",
     "@mantine/hooks": "7.4.2",
+    "@plasmohq/messaging": "^0.6.2",
+    "@plasmohq/storage": "^1.13.0",
+    "mantine-form-zod-resolver": "^1.1.0",
+    "pako": "^2.1.0",
     "plasmo": "0.89.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/core": "7.23.7",
@@ -31,7 +38,17 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
-    ]
+      "https://ffxiv.eorzeacollection.com/glamour/*"
+    ],
+    "permissions": [
+      "activeTab",
+      "clipboardRead",
+      "clipboardWrite"
+    ],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "$FIREFOX_EXT_ID"
+      }
+    }
   }
 }
