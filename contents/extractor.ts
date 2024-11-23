@@ -13,8 +13,6 @@ console.info("Extraction Script loading");
 
 try {
   browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log("Received message:", message);
-
     if (message === "get-equipment") {
       extractEquipment().then(equipment => {
         console.log("Sending back equipment:", equipment);
@@ -22,12 +20,9 @@ try {
       });
       return true;
     }
-
-    console.warn("Unknown message type", message);
     return false;
   });
 
-  console.info("Listener successfully added");
 } catch (error) {
   console.error("Error setting up listener:", error);
 }

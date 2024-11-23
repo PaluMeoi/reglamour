@@ -86,8 +86,6 @@ export function App() {
     setEquipment(newEquipment);
   }
 
-  console.log("AAAH", equipment)
-
   if (!equipmentQuery.data) {
     return (
       <Stack miw={500}>
