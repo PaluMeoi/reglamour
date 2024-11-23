@@ -12,17 +12,17 @@ const slots = new Map([
   ["necklace", "Neck"],
   ["bracelets", "Wrists"],
   ["weapon", "MainHand"],
-  // Rings need to be handled separately
+  ["offhand", "OffHand"],
+  ["lring", "LFinger"],
+  ["rring", "RFinger"]
 ]);
 
 export async function getItemIdsMap(input: Item[]) {
-  console.info("Getting items map");
-
   if (input.length === 0) return new Map();
   const filter = `(${input.map((item) => `Icon=${item.id}`).join(" ")})`;
   const url =
     `https://beta.xivapi.com/api/1/search?sheets=Item&query=${filter}`;
-  const result = await fetch(url);
+  const result = await fetch(url, {"cache": "force-cache"});
   const data = await result.json() as XivApi;
   return new Map(
     input.map((item) => [
@@ -34,34 +34,45 @@ export async function getItemIdsMap(input: Item[]) {
   );
 }
 
-export function MakeGlamStructure(input: Item[], items) {
+export function MakeGlamStructure(input: Item[], items: Iterable<readonly [unknown, unknown]>) {
   const itemsMap = new Map(items);
   const Equipment = {};
-  for (const item of input) {
-    if (slots.has(item.slot)) {
-      const slot = slots.get(item.slot);
-      // Get Dyes
-      const dyes = {};
-      const dye1 = item.dyes[0] ? item.dyes[0].name : null;
-      const dye2 = item.dyes[1] ? item.dyes[1].name : null;
 
-      if (dye1) {
-        dyes["Stain"] = stains.get(dye1);
-      }
-      if (dye2) {
-        dyes["Stain2"] = stains.get(dye2);
-      }
+  function buildItem(item: Item, slotOverride?: string) {
+    const slot = slotOverride || slots.get(item.slot);
+    // Get Dyes
+    const dyes = {};
+    const dye1 = item.dyes[0] ? item.dyes[0].name : null;
+    const dye2 = item.dyes[1] ? item.dyes[1].name : null;
 
-      Equipment[slot] = {
-        ItemId: itemsMap.get(item.id),
-        Apply: true,
-        ApplyStain: true,
-        ...dyes,
-      };
+    if (dye1) {
+      dyes["Stain"] = stains.get(dye1);
+    }
+    if (dye2) {
+      dyes["Stain2"] = stains.get(dye2);
+    }
+
+    Equipment[slot] = {
+      ItemId: itemsMap.get(item.id),
+      Apply: item.selected,
+      ApplyStain: true,
+      ...dyes,
+    };
+
+    if(slot === "MainHand" && input.filter(i => i.slot === "offhand").length === 0) {
+      buildItem(item, "OffHand")
     }
   }
 
-  console.log("Equipment", Equipment);
+  for (const item of input) {
+    if (slots.has(item.slot)) {
+      try {
+        buildItem(item);
+      } catch (e) {
+        console.error("Error building item", item)
+      }
+    }
+  }
   return { FileVersion: 1, Equipment };
 }
 

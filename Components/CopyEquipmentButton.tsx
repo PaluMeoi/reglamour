@@ -22,7 +22,7 @@ export function CopyEquipmentButton(props: Props) {
   });
 
   const glamBase64 = convertToGlamourer(
-    equipment.filter((item: Item) => item.selected),
+    equipment,
     itemIdsMapQuery.data,
   );
 

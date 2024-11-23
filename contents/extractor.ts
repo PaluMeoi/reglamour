@@ -57,11 +57,18 @@ async function extractEquipment() {
     document.querySelectorAll('a[href*="/glamours/"]'),
   ).filter((element) => regex.test(element.getAttribute("href")!));
 
+  let rings = 0;
+
   for (const element of handElements) {
     if (element.hasAttribute("href")) {
       const regexGroups = regex.exec(element.getAttribute("href")!)?.groups;
 
       const itemData = ItemSchema.parse(regexGroups);
+
+      if (itemData.slot === "ring") {
+        itemData.slot = ["lring", "rring"][rings]
+        rings++
+      }
 
       const nameElement = element.parentElement!.querySelector(
         ".c-gear-slot-item-name",

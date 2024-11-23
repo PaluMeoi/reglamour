@@ -46,6 +46,7 @@ async function getEquipment(): Promise<Item[]> {
         return;
       }
 
+      console.log(tabs[0]);
       browserAPI.tabs.sendMessage(
         tabs[0].id,
         "get-equipment",
