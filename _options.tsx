@@ -1,9 +1,7 @@
 import {
   Button,
-  Center,
   Group,
   Stack,
-  Text,
   TextInput,
   Title,
 } from "@mantine/core";

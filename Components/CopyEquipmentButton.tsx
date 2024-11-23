@@ -9,8 +9,6 @@ interface Props {
 }
 
 export function CopyEquipmentButton(props: Props) {
-  const [clipboard, setClipboard] = useState("Test");
-
   const { equipment } = props;
 
   const iconIds = equipment.map((item) => item.id);

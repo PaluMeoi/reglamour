@@ -6,7 +6,7 @@
   "author": "Palu (reglamour@meoi.ninja)",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build --target=firefox-mv2",
+    "build": "plasmo build --target=firefox-mv2 --zip --bundle-buddy",
     "package": "plasmo package --target=firefox-mv2",
     "firefox-dev": "plasmo dev --target=firefox-mv2"
   },

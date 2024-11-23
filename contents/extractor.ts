@@ -32,8 +32,8 @@ try {
   console.error("Error setting up listener:", error);
 }
 
-const glamIdRegex =
-  /https:\/\/ffxiv\.eorzeacollection\.com\/glamour\/(\d+)\/.*/;
+// const glamIdRegex =
+//   /https:\/\/ffxiv\.eorzeacollection\.com\/glamour\/(\d+)\/.*/;
 
 function extractDyes(element: Element) {
   const dyes = [];
