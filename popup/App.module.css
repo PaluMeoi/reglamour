@@ -1,0 +1,11 @@
+.buttonRoot {
+  overflow: hidden;
+  text-align: left;
+  position: relative;
+}
+
+.scrollText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

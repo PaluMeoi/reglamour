@@ -1,12 +1,12 @@
 {
   "name": "reglamour",
   "displayName": "Reglamour",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Glamourer tools for Eorzean Collection",
   "author": "Palu (reglamour@meoi.ninja)",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build && plasmo build --target=firefox-mv2",
+    "build": "plasmo build --target=firefox-mv2",
     "package": "plasmo package --target=firefox-mv2",
     "firefox-dev": "plasmo dev --target=firefox-mv2"
   },
@@ -16,6 +16,7 @@
     "@mantine/hooks": "7.4.2",
     "@plasmohq/messaging": "^0.6.2",
     "@plasmohq/storage": "^1.13.0",
+    "@tanstack/react-query": "^5.61.0",
     "mantine-form-zod-resolver": "^1.1.0",
     "pako": "^2.1.0",
     "plasmo": "0.89.4",
@@ -27,6 +28,7 @@
     "@babel/core": "7.23.7",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@types/chrome": "0.0.258",
+    "@types/firefox-webext-browser": "^120.0.4",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
@@ -41,6 +43,7 @@
       "https://ffxiv.eorzeacollection.com/glamour/*"
     ],
     "permissions": [
+      "tabs",
       "activeTab",
       "clipboardRead",
       "clipboardWrite"

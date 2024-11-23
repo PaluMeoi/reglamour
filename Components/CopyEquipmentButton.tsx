@@ -1,46 +1,46 @@
-import {Button, ButtonGroup, CopyButton} from "@mantine/core";
-import {EquipmentSchema, type Item} from "~lib/schema";
-import {useState} from "react";
+import { Button, CopyButton } from "@mantine/core";
+import { type Item } from "~lib/schema";
+import { useState } from "react";
+import { convertToGlamourer, getItemIdsMap } from "~lib/convert";
+import { useQuery } from "~node_modules/@tanstack/react-query";
 
 interface Props {
   equipment: Item[];
 }
 
 export function CopyEquipmentButton(props: Props) {
-  const [clipboard, setClipboard] = useState("Test")
+  const [clipboard, setClipboard] = useState("Test");
 
-  const {equipment} = props;
+  const { equipment } = props;
 
-  async function mergeCopy() {
-    try {
-      const clipboardContent = JSON.parse(await navigator.clipboard.readText());
-      setClipboard(clipboardContent)
-      console.log(clipboardContent);
-      if (EquipmentSchema.safeParse(clipboardContent)) {
-        console.log(EquipmentSchema.safeParse(clipboardContent));
+  const iconIds = equipment.map((item) => item.id);
 
+  const itemIdsMapQuery = useQuery({
+    queryKey: iconIds,
+    queryFn: async () => {
+      return getItemIdsMap(equipment);
+    },
+    enabled: equipment.length > 0,
+  });
 
-      }
-    } catch (error) {
-      console.warn("REGLAMOUR: Invalid base glamour to merge.")
-    }
+  const glamBase64 = convertToGlamourer(
+    equipment.filter((item: Item) => item.selected),
+    itemIdsMapQuery.data,
+  );
 
+  if (!glamBase64) {
+    return null;
   }
 
   return (
     <>
-      <ButtonGroup>
-        <CopyButton value={JSON.stringify(equipment.filter((item: Item) => item.selected), null, 2)}>
-          {({copied, copy}) => (
-            <Button color={copied ? "teal" : "blue"} onClick={copy}>
-              {copied ? "Copied!" : "Copy"}
-            </Button>
-          )}
-        </CopyButton>
-        <Button onClick={mergeCopy}>
-          Merge
-        </Button>
-      </ButtonGroup>
+      <CopyButton value={glamBase64}>
+        {({ copied, copy }) => (
+          <Button color={copied ? "teal" : "blue"} onClick={copy}>
+            {copied ? "Copied!" : "Copy"}
+          </Button>
+        )}
+      </CopyButton>
     </>
   );
 }
