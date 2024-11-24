@@ -14,7 +14,7 @@ const slots = new Map([
   ["weapon", "MainHand"],
   ["offhand", "OffHand"],
   ["lring", "LFinger"],
-  ["rring", "RFinger"]
+  ["rring", "RFinger"],
 ]);
 
 export async function getItemIdsMap(input: Item[]) {
@@ -22,7 +22,7 @@ export async function getItemIdsMap(input: Item[]) {
   const filter = `(${input.map((item) => `Icon=${item.id}`).join(" ")})`;
   const url =
     `https://beta.xivapi.com/api/1/search?sheets=Item&query=${filter}`;
-  const result = await fetch(url, {"cache": "force-cache"});
+  const result = await fetch(url, { "cache": "force-cache" });
   const data = await result.json() as XivApi;
   return new Map(
     input.map((item) => [
@@ -34,7 +34,10 @@ export async function getItemIdsMap(input: Item[]) {
   );
 }
 
-export function MakeGlamStructure(input: Item[], items: Iterable<readonly [unknown, unknown]>) {
+export function MakeGlamStructure(
+  input: Item[],
+  items: Iterable<readonly [unknown, unknown]>,
+) {
   const itemsMap = new Map(items);
   const Equipment = {};
 
@@ -55,12 +58,15 @@ export function MakeGlamStructure(input: Item[], items: Iterable<readonly [unkno
     Equipment[slot] = {
       ItemId: itemsMap.get(item.id),
       Apply: item.selected,
-      ApplyStain: true,
+      ApplyStain: item.selected,
       ...dyes,
     };
 
-    if(slot === "MainHand" && input.filter(i => i.slot === "offhand").length === 0) {
-      buildItem(item, "OffHand")
+    if (
+      slot === "MainHand" &&
+      input.filter((i) => i.slot === "offhand").length === 0
+    ) {
+      buildItem(item, "OffHand");
     }
   }
 
@@ -69,7 +75,7 @@ export function MakeGlamStructure(input: Item[], items: Iterable<readonly [unkno
       try {
         buildItem(item);
       } catch (e) {
-        console.error("Error building item", item)
+        console.error("Error building item", item);
       }
     }
   }

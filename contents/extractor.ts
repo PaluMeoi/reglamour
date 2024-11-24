@@ -7,22 +7,18 @@ export const config: PlasmoCSConfig = {
 
 declare const browser: typeof chrome;
 
-const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
-
-console.info("Extraction Script loading");
+const browserAPI = typeof browser !== "undefined" ? browser : chrome;
 
 try {
   browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message === "get-equipment") {
-      extractEquipment().then(equipment => {
-        console.log("Sending back equipment:", equipment);
+      extractEquipment().then((equipment) => {
         sendResponse(equipment);
       });
       return true;
     }
     return false;
   });
-
 } catch (error) {
   console.error("Error setting up listener:", error);
 }
@@ -66,8 +62,8 @@ async function extractEquipment() {
       const itemData = ItemSchema.parse(regexGroups);
 
       if (itemData.slot === "ring") {
-        itemData.slot = ["lring", "rring"][rings]
-        rings++
+        itemData.slot = ["lring", "rring"][rings];
+        rings++;
       }
 
       const nameElement = element.parentElement!.querySelector(

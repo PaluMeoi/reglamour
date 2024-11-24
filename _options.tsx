@@ -1,10 +1,4 @@
-import {
-  Button,
-  Group,
-  Stack,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Button, Group, Stack, TextInput, Title } from "@mantine/core";
 import { ThemeProvider } from "~theme";
 
 import "@mantine/core/styles.css";

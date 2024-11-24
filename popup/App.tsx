@@ -1,6 +1,8 @@
+import { Placeholder } from "~Components/Placeholder";
+
 declare const browser: typeof chrome;
 
-const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+const browserAPI = typeof browser !== "undefined" ? browser : chrome;
 
 import type { Item } from "~lib/schema";
 import {
@@ -38,42 +40,52 @@ function EquipmentItem(props: { item: Item; toggle: (slot: string) => void }) {
   );
 }
 
+async function isEorzeaCollection() {
+  const siteRegex =
+    /https:\/\/ffxiv\.eorzeacollection\.com\/glamour\/(\d+)\/.*/;
+  const tab = await browser.tabs.query({ active: true, currentWindow: true })
+    .then((tab) => tab[0].url);
+  return siteRegex.test(tab);
+}
+
 async function getEquipment(): Promise<Item[]> {
   return new Promise((resolve, reject) => {
-    browserAPI.tabs.query({active: true, currentWindow: true}, (tabs) => {
+    browserAPI.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (!tabs[0]?.id) {
-        reject(new Error ('No active tab found'))
+        reject(new Error("No active tab found"));
         return;
       }
-
-      console.log(tabs[0]);
       browserAPI.tabs.sendMessage(
         tabs[0].id,
         "get-equipment",
         (response) => {
-          console.log("Got response in popup:", response);
           if (browserAPI.runtime.lastError) {
             reject(browserAPI.runtime.lastError);
           } else {
             resolve(response);
           }
-        }
-      )
-    })
-  })
+        },
+      );
+    });
+  });
 }
 
 export function App() {
   const [equipment, setEquipment] = useState([]);
 
+  const isEC = useQuery({
+    queryKey: ["is-EorzeaCollection"],
+    queryFn: isEorzeaCollection,
+  });
+
   const equipmentQuery = useQuery({
     queryKey: ["equipment"],
     queryFn: async (): Promise<Item[]> => {
       const data = await getEquipment();
-      console.log("Recieved equipment:", data);
       setEquipment(data);
       return data;
     },
+    enabled: isEC.data,
   });
 
   function handleToggle(slot: string) {
@@ -87,9 +99,13 @@ export function App() {
     setEquipment(newEquipment);
   }
 
+  if (!isEC.data && isEC.isFetched) {
+    return <Placeholder />;
+  }
+
   if (!equipmentQuery.data) {
     return (
-      <Stack miw={500}>
+      <Stack w={300} h={300}>
         <Loader color={"cyan"} />
         <Text>
           Loading...
@@ -99,7 +115,7 @@ export function App() {
   }
 
   return (
-    <Paper miw={300} p={"xs"}>
+    <Paper w={300} p={"xs"}>
       <Stack gap="sm">
         <Paper withBorder p="xs">
           <Stack gap="3">
