@@ -1,12 +1,12 @@
 {
   "name": "reglamour",
   "displayName": "Reglamour",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Glamourer tools for Eorzean Collection",
   "author": "Palu (reglamour@meoi.ninja)",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build --target=firefox-mv2 --zip --bundle-buddy",
+    "build": "plasmo build --target=firefox-mv2 --zip",
     "package": "plasmo package --target=firefox-mv2",
     "firefox-dev": "plasmo dev --target=firefox-mv2"
   },
@@ -49,7 +49,8 @@
     ],
     "browser_specific_settings": {
       "gecko": {
-        "id": "$FIREFOX_EXT_ID"
+        "id": "$FIREFOX_EXT_ID",
+        "update_url": "$FIREFOX_EXT_UPDATE"
       }
     }
   }
