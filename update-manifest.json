@@ -2,6 +2,10 @@
   "addons": {
     "{313b4ad5-1940-4fc4-88f0-4870a7a979f5}": {
       "updates": [
+        {
+          "version": "0.0.6",
+          "update_link": "https://github.com/PaluMeoi/reglamour/releases/download/release/reglamour-0.0.6.xpi"
+        }
       ]
     }
   }
