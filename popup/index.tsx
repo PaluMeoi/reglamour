@@ -1,9 +1,11 @@
-import "@mantine/core/styles.css";
-import { ThemeProvider } from "~theme";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { App } from "~popup/App";
+import "@mantine/core/styles.css"
 
-const queryClient = new QueryClient();
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+import { App } from "~popup/App"
+import { ThemeProvider } from "~theme"
+
+const queryClient = new QueryClient()
 
 function IndexPopup() {
   return (
@@ -12,7 +14,7 @@ function IndexPopup() {
         <App />
       </QueryClientProvider>
     </ThemeProvider>
-  );
+  )
 }
 
-export default IndexPopup;
+export default IndexPopup

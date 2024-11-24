@@ -113,5 +113,5 @@ export const stains = new Map([
   ["Metallic Green", 117],
   ["Metallic Sky Blue", 118],
   ["Metallic Blue", 119],
-  ["Metallic Purple", 120],
-]);
+  ["Metallic Purple", 120]
+])
